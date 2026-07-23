@@ -3,52 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Registros — Registro de Personal</title>
+<title>Registros — Administrador</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-1:#0A1A3D;
-    --bg-2:#061029;
+    --bg:#2E7FD9;
     --card:#FFFFFF;
     --card-2:#F2F5FA;
     --accent:#E8A33D;
     --accent-dim:#B87D2C;
-    --text:#FFFFFF;
-    --text-dim:#0A0A0A;
+    --text:#0A0A0A;
+    --text-dim:#3A3A3A;
     --line:#123A63;
     --good:#4FA88A;
     --bad:#D9694F;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html,body{height:100%;}
   body{
-    background:linear-gradient(135deg, var(--bg-1), var(--bg-2));
+    background:var(--bg);
     color:var(--text);
-    font-family:'Inter',sans-serif;
     font-weight:600;
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  #gate{
     min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
     padding:24px;
-    -webkit-font-smoothing:antialiased;
   }
-  .wrap{ width:100%; max-width:420px; text-align:center; }
-
-  .profile-icon{
-    width:76px;
-    height:76px;
-    border-radius:50%;
-    border:2px solid var(--accent);
-    background:linear-gradient(160deg, #14275a, #0A1A3D);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:0 auto 20px;
+  .gate-card{
+    width:100%;
+    max-width:360px;
+    background:var(--card);
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:28px 24px;
   }
-  .profile-icon svg{ width:34px; height:34px; }
-
   .eyebrow{
     font-size:12px;
     letter-spacing:.14em;
@@ -59,362 +54,532 @@
   }
   h1{
     font-family:'Space Grotesk',sans-serif;
-    font-size:34px;
-    font-weight:800;
-    letter-spacing:-0.01em;
-    margin-bottom:10px;
+    font-size:24px;
+    margin-bottom:18px;
   }
-  .page-title{
-    color:#FFFFFF;
-  }
-  .sub{
-    color:#FFFFFF;
-    font-weight:700;
-    font-size:14.5px;
-    line-height:1.5;
-    margin-bottom:20px;
-  }
-
-  .card{
-    background:var(--card);
-    color:var(--text-dim);
-    border:none;
-    border-radius:18px;
-    padding:24px;
-    position:relative;
-    overflow:hidden;
-    text-align:left;
-    box-shadow:0 12px 30px rgba(0,0,0,0.35);
-  }
-  .card::before{
-    content:'';
-    position:absolute;
-    top:0; left:0; right:0;
-    height:5px;
-    background:linear-gradient(90deg, #2E7FD9, #9FB0AE, var(--accent));
-  }
-
-  #step-google{ text-align:center; padding:8px 0 4px; }
-  .g-btn{
-    width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    background:#FFFFFF;
-    border:1px solid var(--line);
-    color:#1a1a1a;
-    border-radius:10px;
-    padding:14px 18px;
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:15px;
-    cursor:pointer;
-    transition:transform .12s ease, opacity .12s ease;
-  }
-  .g-btn:active{ transform:scale(0.98); }
-  .g-btn svg{ width:18px; height:18px; flex-shrink:0; }
-  .hint{
-    color:var(--text-dim);
-    font-weight:700;
-    font-size:12.5px;
-    margin-top:14px;
-    line-height:1.5;
-  }
-
-  #step-form{ display:none; }
-  .email-pill{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:var(--card-2);
-    border:1px solid var(--line);
-    border-radius:100px;
-    padding:6px 12px 6px 6px;
-    font-size:13px;
-    color:var(--text-dim);
-    margin-bottom:22px;
-  }
-  .email-pill .dot{
-    width:22px; height:22px;
-    border-radius:50%;
-    background:var(--good);
-    color:#041E42;
-    display:flex; align-items:center; justify-content:center;
-    font-size:13px; font-weight:700;
-    flex-shrink:0;
-  }
-  label{
-    display:block;
-    font-size:12px;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    color:var(--text-dim);
-    font-weight:600;
-    margin-bottom:8px;
-  }
-  .field{ margin-bottom:18px; }
-  input[type=text], input[type=tel], input[type=month]{
+  input[type=password]{
     width:100%;
     background:var(--card-2);
     border:1px solid var(--line);
     border-radius:10px;
     padding:13px 14px;
-    color:var(--text-dim);
+    color:var(--text);
     font-size:16px;
-    font-family:'Inter',sans-serif;
     outline:none;
-    transition:border-color .15s ease;
+    margin-bottom:12px;
   }
   input:focus{ border-color:var(--accent); }
-  input::placeholder{ color:#5D716F; }
-
-  .submit-btn{
+  .btn{
     width:100%;
     background:var(--accent);
     color:#1a1207;
     border:none;
     border-radius:10px;
-    padding:14px 18px;
-    font-family:'Inter',sans-serif;
+    padding:13px 18px;
     font-weight:700;
     font-size:15px;
     cursor:pointer;
-    margin-top:6px;
-    transition:transform .12s ease, opacity .12s ease;
   }
-  .submit-btn:active{ transform:scale(0.98); }
-  .submit-btn:disabled{ opacity:.5; cursor:default; }
-
-  #step-done{ display:none; text-align:center; padding:12px 0; }
-  .check{
-    width:56px; height:56px;
-    border-radius:50%;
-    background:var(--good);
-    display:flex; align-items:center; justify-content:center;
-    margin:0 auto 18px;
-  }
-  .check svg{ width:26px; height:26px; }
-  #step-done h2{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:20px;
-    margin-bottom:8px;
-  }
-  #step-done p{ color:var(--text-dim); font-size:14px; line-height:1.5; }
-
-  .err{
-    color:var(--bad);
-    font-size:13px;
-    margin-top:12px;
-    display:none;
-  }
-
-  footer{
+  .err{ color:var(--bad); font-size:13px; margin-top:10px; display:none; }
+  .back-link{
+    display:block;
     text-align:center;
-    margin-top:20px;
+    color:#0A0A0A;
+    font-size:13px;
+    font-weight:800;
+    text-decoration:none;
+    border-bottom:1px dotted #0A0A0A;
+    margin-top:18px;
   }
-  footer a{
-    color:var(--accent);
+  .back-link-bottom{
+    margin-top:24px;
+    padding-bottom:20px;
+  }
+
+  #panel{ display:none; padding:24px 18px 60px; max-width:900px; margin:0 auto; }
+  .top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:22px;
+    flex-wrap:wrap;
+  }
+  .count{
+    color:#0A0A0A;
     font-weight:800;
     font-size:13px;
-    text-decoration:none;
-    border-bottom:1px dotted var(--accent);
+  }
+  .ronda-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    background:var(--card-2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:20px;
+  }
+  .ronda-label{
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:#0A0A0A;
+    font-weight:800;
+    margin-bottom:3px;
+  }
+  .ronda-name{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:17px;
+    font-weight:800;
+    color:var(--accent);
+  }
+  .new-round-btn{
+    background:#FFFFFF;
+    color:var(--text);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:9px 14px;
+    font-weight:800;
+    font-size:13px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .filter-select{
+    background:var(--card-2);
+    color:var(--text);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    font-size:13px;
+    font-family:'Inter',sans-serif;
+    outline:none;
+  }
+  .group-header{
+    color:var(--text-dim);
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    font-weight:600;
+    margin:18px 0 8px;
+  }
+  .group-header:first-child{ margin-top:0; }
+  .export-btn{
+    background:var(--accent);
+    color:#1a1207;
+    border:none;
+    border-radius:10px;
+    padding:11px 16px;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .reset-btn{
+    background:#FFFFFF;
+    color:var(--bad);
+    border:1px solid var(--bad);
+    border-radius:10px;
+    padding:11px 16px;
+    font-weight:800;
+    font-size:14px;
+    cursor:pointer;
+    margin-left:8px;
+  }
+  .modal-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,27,30,0.8);
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    z-index:50;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal{
+    width:100%;
+    max-width:380px;
+    background:var(--card);
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:24px;
+  }
+  .modal h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:19px;
+    margin-bottom:10px;
+  }
+  .modal p{
+    color:var(--text-dim);
+    font-size:13.5px;
+    line-height:1.5;
+    margin-bottom:18px;
+  }
+  .modal input[type=text]{
+    width:100%;
+    background:var(--card-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    color:var(--text);
+    font-size:15px;
+    outline:none;
+    margin-bottom:16px;
+  }
+  .modal input:focus{ border-color:var(--bad); }
+  .modal-actions{
+    display:flex;
+    gap:10px;
+  }
+  .btn-cancel{
+    flex:1;
+    background:var(--card-2);
+    color:var(--text);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .btn-danger{
+    flex:1;
+    background:var(--bad);
+    color:#2a0f09;
+    border:none;
+    border-radius:10px;
+    padding:12px;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .btn-danger:disabled{
+    opacity:.4;
+    cursor:default;
+  }
+  .list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .row{
+    background:var(--card);
+    border:2px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+  .row .name{ font-weight:600; font-size:15px; }
+  .row .meta{ color:var(--text-dim); font-size:13px; margin-top:2px; }
+  .row .date{ color:var(--text-dim); font-size:12px; white-space:nowrap; }
+  .empty{
+    text-align:center;
+    color:#0A0A0A;
+    font-weight:700;
+    font-size:14px;
+    padding:40px 20px;
   }
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <div class="profile-icon">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="8" r="4"></circle>
-      <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"></path>
-    </svg>
+<div id="gate">
+  <div class="gate-card">
+    <div class="eyebrow">Registros</div>
+    <h1>Acceso administrador</h1>
+    <input type="password" id="pw" placeholder="Contraseña">
+    <button class="btn" id="pwBtn">Entrar</button>
+    <p class="err" id="pwErr">Contraseña incorrecta.</p>
+    <a href="index.html" class="back-link">← Volver al inicio</a>
   </div>
-  <div class="eyebrow">Registro de personal</div>
-  <h1 class="page-title">Registros</h1>
-  <p class="sub">Confirma tu cuenta y completa tus datos para quedar registrado.</p>
+</div>
 
-  <div class="card">
-
-    <div id="step-google">
-      <button class="g-btn" id="googleBtn">
-        <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.5 29.6 4.5 24 4.5 12.9 4.5 4 13.4 4 24.5s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.5 29.6 4.5 24 4.5c-7.5 0-14 4.2-17.7 10.2z"/><path fill="#4CAF50" d="M24 44.5c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.4c-2 1.5-4.6 2.5-7.7 2.5-5.2 0-9.6-3.3-11.3-8l-6.6 5.1C9.9 40.2 16.4 44.5 24 44.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.3-4.1 5.7l6.6 5.4C41.4 36 44 30.8 44 24.5c0-1.3-.1-2.7-.4-4z"/></svg>
-        Continuar con Google
-      </button>
-      <p class="hint">Usamos tu cuenta de Google solo para confirmar tu correo. No publicamos nada a tu nombre.</p>
-      <p class="err" id="googleErr"></p>
+<div id="panel">
+  <div class="ronda-bar">
+    <div>
+      <div class="ronda-label">Ronda activa</div>
+      <div class="ronda-name" id="rondaNombre">General</div>
     </div>
-
-    <div id="step-form">
-      <div class="email-pill">
-        <span class="dot">✓</span>
-        <span id="emailShown"></span>
-      </div>
-
-      <div class="field">
-        <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" placeholder="Ej. Juan Pérez" autocomplete="name">
-      </div>
-
-      <div class="field">
-        <label for="telefono">Teléfono</label>
-        <input type="tel" id="telefono" placeholder="(999) 999-9999" inputmode="numeric" autocomplete="tel">
-      </div>
-
-      <div class="field">
-        <label for="cargo">Cargo o posición</label>
-        <input type="text" id="cargo" placeholder="Ej. Limpieza, Supervisor" autocomplete="off">
-      </div>
-
-      <div class="field">
-        <label for="fechaIngreso">Fecha de ingreso (mes y año)</label>
-        <input type="month" id="fechaIngreso">
-      </div>
-
-      <button class="submit-btn" id="submitBtn">Someter registro</button>
-      <p class="err" id="formErr"></p>
-    </div>
-
-    <div id="step-already" style="display:none; text-align:center; padding:12px 0;">
-      <div class="check" style="background:var(--card-2); border:1px solid var(--line);">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 8v5M12 16h.01" stroke="#E8A33D" stroke-width="2.5" stroke-linecap="round"/></svg>
-      </div>
-      <h2>Ya estás registrado</h2>
-      <p>Este correo ya tiene un registro guardado. No es necesario registrarte de nuevo.</p>
-    </div>
-
-    <div id="step-done">
-      <div class="check">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#041E42" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h2>Registro completado</h2>
-      <p>Tus datos quedaron guardados correctamente.</p>
-    </div>
-
+    <button class="new-round-btn" id="newRoundBtn">Nueva ronda</button>
   </div>
 
-  <footer>
-    <a href="admin.html">Administrador</a>
-  </footer>
+  <div class="top">
+    <div>
+      <div class="eyebrow">Registros</div>
+      <h1 style="margin-bottom:2px;">Lista de personal</h1>
+      <div class="count" id="count"></div>
+    </div>
+    <select id="filterSelect" class="filter-select">
+      <option value="__todas__">Todas las rondas</option>
+    </select>
+    <button class="export-btn" id="exportBtn">Exportar a Excel</button>
+    <button class="reset-btn" id="resetBtn">Borrar todo</button>
+  </div>
+  <div class="list" id="list"></div>
+  <a href="index.html" class="back-link back-link-bottom">← Volver al inicio</a>
+</div>
+
+<!-- Modal nueva ronda -->
+<div id="roundModalOverlay" class="modal-overlay">
+  <div class="modal">
+    <h2>Iniciar nueva ronda</h2>
+    <p>Los registros anteriores se quedan guardados en su ronda. Los nuevos registros que entren se guardarán bajo el nombre que pongas aquí.</p>
+    <label style="display:block; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-dim); font-weight:600; margin-bottom:8px;">Nombre de la ronda</label>
+    <input type="text" id="roundNameInput" placeholder="Ej. Julio 2026">
+    <div class="modal-actions">
+      <button class="btn-cancel" id="roundCancelBtn">Cancelar</button>
+      <button class="btn-danger" id="roundConfirmBtn" style="background:var(--accent); color:#1a1207;">Iniciar ronda</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div id="modalOverlay" class="modal-overlay">
+  <div class="modal">
+    <h2>¿Borrar todos los registros?</h2>
+    <p>Esto elimina permanentemente los <span id="modalCount">0</span> registros guardados, de todas las rondas. No se puede deshacer.</p>
+    <label style="display:block; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-dim); font-weight:600; margin-bottom:8px;">Escribe BORRAR para confirmar</label>
+    <input type="text" id="confirmInput" placeholder="BORRAR" autocomplete="off">
+    <div class="modal-actions">
+      <button class="btn-cancel" id="cancelBtn">Cancelar</button>
+      <button class="btn-danger" id="confirmDeleteBtn" disabled>Borrar todo</button>
+    </div>
+  </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="firebase-config.js"></script>
 <script>
   firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
   const db = firebase.firestore();
 
-  const stepGoogle = document.getElementById('step-google');
-  const stepForm = document.getElementById('step-form');
-  const stepDone = document.getElementById('step-done');
-  const stepAlready = document.getElementById('step-already');
-  const googleBtn = document.getElementById('googleBtn');
-  const googleErr = document.getElementById('googleErr');
-  const emailShown = document.getElementById('emailShown');
-  const submitBtn = document.getElementById('submitBtn');
-  const formErr = document.getElementById('formErr');
-  const nombreInput = document.getElementById('nombre');
-  const telefonoInput = document.getElementById('telefono');
-  const cargoInput = document.getElementById('cargo');
-  const fechaIngresoInput = document.getElementById('fechaIngreso');
+  const ADMIN_PASSWORD = "791174";
 
-  let currentEmail = null;
+  const pwInput = document.getElementById('pw');
+  const pwBtn = document.getElementById('pwBtn');
+  const pwErr = document.getElementById('pwErr');
+  const gate = document.getElementById('gate');
+  const panel = document.getElementById('panel');
+  const listEl = document.getElementById('list');
+  const countEl = document.getElementById('count');
+  const exportBtn = document.getElementById('exportBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalCount = document.getElementById('modalCount');
+  const confirmInput = document.getElementById('confirmInput');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+  const rondaNombreEl = document.getElementById('rondaNombre');
+  const newRoundBtn = document.getElementById('newRoundBtn');
+  const roundModalOverlay = document.getElementById('roundModalOverlay');
+  const roundNameInput = document.getElementById('roundNameInput');
+  const roundCancelBtn = document.getElementById('roundCancelBtn');
+  const roundConfirmBtn = document.getElementById('roundConfirmBtn');
+  const filterSelect = document.getElementById('filterSelect');
+
+  let registros = [];
   let rondaActual = 'General';
 
-  async function getRondaActual(){
+  pwBtn.addEventListener('click', checkPassword);
+  pwInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
+
+  function checkPassword(){
+    if (pwInput.value === ADMIN_PASSWORD) {
+      gate.style.display = 'none';
+      panel.style.display = 'block';
+      loadRonda();
+      loadRegistros();
+    } else {
+      pwErr.style.display = 'block';
+    }
+  }
+
+  async function loadRonda(){
     try {
       const doc = await db.collection('meta').doc('config').get();
       if (doc.exists && doc.data().rondaActual) {
         rondaActual = doc.data().rondaActual;
       }
-    } catch (e) {
-      // si no existe todavía, se queda "General"
-    }
+    } catch (e) { /* se queda "General" */ }
+    rondaNombreEl.textContent = rondaActual;
   }
 
-  googleBtn.addEventListener('click', async () => {
-    googleErr.style.display = 'none';
-    const provider = new firebase.auth.GoogleAuthProvider();
-    try {
-      const result = await auth.signInWithPopup(provider);
-      currentEmail = result.user.email;
-      await getRondaActual();
+  async function loadRegistros(){
+    const snap = await db.collection('registros').orderBy('fecha', 'desc').get();
+    registros = snap.docs.map(doc => {
+      const d = doc.data();
+      return {
+        nombre: d.nombre || '',
+        telefono: d.telefono || '',
+        email: d.email || '',
+        cargo: d.cargo || '',
+        fechaIngreso: d.fechaIngreso || '',
+        grupo: d.grupo || 'General',
+        fecha: d.fecha ? d.fecha.toDate() : null
+      };
+    });
+    populateFilter();
+    render();
+  }
 
-      const existing = await db.collection('registros')
-        .where('email', '==', currentEmail)
-        .where('grupo', '==', rondaActual)
-        .limit(1).get();
-      if (!existing.empty) {
-        stepGoogle.style.display = 'none';
-        stepAlready.style.display = 'block';
-        return;
+  function populateFilter(){
+    const grupos = [...new Set(registros.map(r => r.grupo))];
+    const current = filterSelect.value || '__todas__';
+    filterSelect.innerHTML = '<option value="__todas__">Todas las rondas</option>' +
+      grupos.map(g => `<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join('');
+    filterSelect.value = grupos.includes(current) || current === '__todas__' ? current : '__todas__';
+  }
+
+  function filteredRegistros(){
+    if (filterSelect.value === '__todas__') return registros;
+    return registros.filter(r => r.grupo === filterSelect.value);
+  }
+
+  filterSelect.addEventListener('change', render);
+
+  function render(){
+    const data = filteredRegistros();
+    countEl.textContent = data.length === 1 ? '1 registro' : `${data.length} registros`;
+    if (data.length === 0) {
+      listEl.innerHTML = '<div class="empty">Todavía no hay registros.</div>';
+      return;
+    }
+
+    if (filterSelect.value !== '__todas__') {
+      listEl.innerHTML = data.map(rowHtml).join('');
+      return;
+    }
+
+    let html = '';
+    let lastGrupo = null;
+    data.forEach(r => {
+      if (r.grupo !== lastGrupo) {
+        html += `<div class="group-header">${escapeHtml(r.grupo)}</div>`;
+        lastGrupo = r.grupo;
       }
+      html += rowHtml(r);
+    });
+    listEl.innerHTML = html;
+  }
 
-      emailShown.textContent = currentEmail;
-      stepGoogle.style.display = 'none';
-      stepForm.style.display = 'block';
-    } catch (e) {
-      googleErr.textContent = 'No se pudo confirmar la cuenta de Google. Intenta de nuevo.';
-      googleErr.style.display = 'block';
-    }
+  function rowHtml(r){
+    const ingresoTxt = r.fechaIngreso ? formatMesAnio(r.fechaIngreso) : '';
+    const metaParts = [r.telefono, r.email];
+    if (r.cargo) metaParts.push(r.cargo);
+    if (ingresoTxt) metaParts.push('Desde ' + ingresoTxt);
+    return `
+      <div class="row">
+        <div>
+          <div class="name">${escapeHtml(r.nombre)}</div>
+          <div class="meta">${metaParts.map(escapeHtml).join(' · ')}</div>
+        </div>
+        <div class="date">${r.fecha ? formatDate(r.fecha) : ''}</div>
+      </div>
+    `;
+  }
+
+  function formatMesAnio(yyyyMM){
+    const [y, m] = yyyyMM.split('-');
+    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    return `${meses[parseInt(m,10)-1]} ${y}`;
+  }
+
+  function formatDate(d){
+    return d.toLocaleDateString('es-US', { year:'numeric', month:'short', day:'numeric' }) + ' ' +
+           d.toLocaleTimeString('es-US', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  exportBtn.addEventListener('click', () => {
+    const data = filteredRegistros().map(r => ({
+      Nombre: r.nombre,
+      Teléfono: r.telefono,
+      Email: r.email,
+      Cargo: r.cargo,
+      'Fecha de ingreso': r.fechaIngreso ? formatMesAnio(r.fechaIngreso) : '',
+      Ronda: r.grupo,
+      'Fecha de registro': r.fecha ? formatDate(r.fecha) : ''
+    }));
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Registros');
+    const fecha = new Date().toISOString().slice(0,10);
+    const sufijo = filterSelect.value === '__todas__' ? 'todas' : filterSelect.value.replace(/\s+/g, '-');
+    XLSX.writeFile(wb, `registros-${sufijo}-${fecha}.xlsx`);
   });
 
-  telefonoInput.addEventListener('input', () => {
-    let digits = telefonoInput.value.replace(/\D/g, '').slice(0, 10);
-    let formatted = digits;
-    if (digits.length > 6) {
-      formatted = `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
-    } else if (digits.length > 3) {
-      formatted = `(${digits.slice(0,3)}) ${digits.slice(3)}`;
-    } else if (digits.length > 0) {
-      formatted = `(${digits}`;
-    }
-    telefonoInput.value = formatted;
+  newRoundBtn.addEventListener('click', () => {
+    const hoy = new Date().toLocaleDateString('es-US', { year:'numeric', month:'long', day:'numeric' });
+    roundNameInput.value = hoy;
+    roundModalOverlay.classList.add('open');
   });
 
-  submitBtn.addEventListener('click', async () => {
-    formErr.style.display = 'none';
-    const nombre = nombreInput.value.trim();
-    const telefono = telefonoInput.value.trim();
-    const cargo = cargoInput.value.trim();
-    const fechaIngreso = fechaIngresoInput.value;
-    const digitCount = telefono.replace(/\D/g, '').length;
+  roundCancelBtn.addEventListener('click', () => {
+    roundModalOverlay.classList.remove('open');
+  });
 
-    if (!nombre) {
-      formErr.textContent = 'Escribe tu nombre completo.';
-      formErr.style.display = 'block';
-      return;
-    }
-    if (digitCount !== 10) {
-      formErr.textContent = 'Escribe un teléfono válido de 10 dígitos.';
-      formErr.style.display = 'block';
-      return;
-    }
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Guardando...';
-
+  roundConfirmBtn.addEventListener('click', async () => {
+    const nombre = roundNameInput.value.trim();
+    if (!nombre) return;
+    roundConfirmBtn.disabled = true;
+    roundConfirmBtn.textContent = 'Guardando...';
     try {
-      await db.collection('registros').add({
-        nombre: nombre,
-        telefono: telefono,
-        email: currentEmail,
-        cargo: cargo,
-        fechaIngreso: fechaIngreso,
-        grupo: rondaActual,
-        fecha: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      stepForm.style.display = 'none';
-      stepDone.style.display = 'block';
+      await db.collection('meta').doc('config').set({ rondaActual: nombre });
+      rondaActual = nombre;
+      rondaNombreEl.textContent = nombre;
+      roundModalOverlay.classList.remove('open');
     } catch (e) {
-      formErr.textContent = 'No se pudo guardar el registro. Intenta de nuevo.';
-      formErr.style.display = 'block';
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Someter registro';
+      alert('No se pudo guardar la nueva ronda. Intenta de nuevo.');
+    }
+    roundConfirmBtn.disabled = false;
+    roundConfirmBtn.textContent = 'Iniciar ronda';
+  });
+
+  resetBtn.addEventListener('click', () => {
+    modalCount.textContent = registros.length;
+    confirmInput.value = '';
+    confirmDeleteBtn.disabled = true;
+    modalOverlay.classList.add('open');
+  });
+
+  cancelBtn.addEventListener('click', () => {
+    modalOverlay.classList.remove('open');
+  });
+
+  confirmInput.addEventListener('input', () => {
+    confirmDeleteBtn.disabled = confirmInput.value.trim() !== 'BORRAR';
+  });
+
+  confirmDeleteBtn.addEventListener('click', async () => {
+    confirmDeleteBtn.disabled = true;
+    confirmDeleteBtn.textContent = 'Borrando...';
+    try {
+      const snap = await db.collection('registros').get();
+      const batchSize = 400;
+      const docs = snap.docs;
+      for (let i = 0; i < docs.length; i += batchSize) {
+        const batch = db.batch();
+        docs.slice(i, i + batchSize).forEach(d => batch.delete(d.ref));
+        await batch.commit();
+      }
+      modalOverlay.classList.remove('open');
+      confirmDeleteBtn.textContent = 'Borrar todo';
+      await loadRegistros();
+    } catch (e) {
+      confirmDeleteBtn.textContent = 'Borrar todo';
+      confirmDeleteBtn.disabled = false;
+      alert('No se pudo completar el borrado. Intenta de nuevo.');
     }
   });
 </script>
