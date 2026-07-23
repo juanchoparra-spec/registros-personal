@@ -8,14 +8,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#4FA8E8;
-    --card:#041E42;
-    --card-2:#0C2D52;
+    --bg:#E8F0FB;
+    --card:#FFFFFF;
+    --card-2:#F2F5FA;
     --accent:#E8A33D;
     --accent-dim:#B87D2C;
-    --text:#D9E1E8;
-    --text-dim:#9FB0AE;
-    --line:#154A7D;
+    --text:#0A0A0A;
+    --text-dim:#3A3A3A;
+    --line:#123A63;
     --good:#4FA88A;
     --bad:#D9694F;
   }
@@ -40,7 +40,7 @@
     width:100%;
     max-width:360px;
     background:var(--card);
-    border:1px solid var(--line);
+    border:2px solid var(--line);
     border-radius:14px;
     padding:28px 24px;
   }
@@ -81,6 +81,20 @@
     cursor:pointer;
   }
   .err{ color:var(--bad); font-size:13px; margin-top:10px; display:none; }
+  .back-link{
+    display:block;
+    text-align:center;
+    color:var(--text-dim);
+    font-size:13px;
+    font-weight:700;
+    text-decoration:none;
+    border-bottom:1px dotted var(--text-dim);
+    margin-top:18px;
+  }
+  .back-link-bottom{
+    margin-top:24px;
+    padding-bottom:20px;
+  }
 
   #panel{ display:none; padding:24px 18px 60px; max-width:900px; margin:0 auto; }
   .top{
@@ -185,7 +199,7 @@
     width:100%;
     max-width:380px;
     background:var(--card);
-    border:1px solid var(--line);
+    border:2px solid var(--line);
     border-radius:14px;
     padding:24px;
   }
@@ -249,7 +263,7 @@
   }
   .row{
     background:var(--card);
-    border:1px solid var(--line);
+    border:2px solid var(--line);
     border-radius:12px;
     padding:14px 16px;
     display:flex;
@@ -277,6 +291,7 @@
     <input type="password" id="pw" placeholder="Contraseña">
     <button class="btn" id="pwBtn">Entrar</button>
     <p class="err" id="pwErr">Contraseña incorrecta.</p>
+    <a href="index.html" class="back-link">← Volver al inicio</a>
   </div>
 </div>
 
@@ -302,6 +317,7 @@
     <button class="reset-btn" id="resetBtn">Borrar todo</button>
   </div>
   <div class="list" id="list"></div>
+  <a href="index.html" class="back-link back-link-bottom">← Volver al inicio</a>
 </div>
 
 <!-- Modal nueva ronda -->
