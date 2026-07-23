@@ -8,14 +8,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#4FA8E8;
-    --card:#041E42;
-    --card-2:#0C2D52;
+    --bg:#E8F0FB;
+    --card:#FFFFFF;
+    --card-2:#F2F5FA;
     --accent:#E8A33D;
     --accent-dim:#B87D2C;
-    --text:#D9E1E8;
-    --text-dim:#9FB0AE;
-    --line:#154A7D;
+    --text:#0A0A0A;
+    --text-dim:#3A3A3A;
+    --line:#123A63;
     --good:#4FA88A;
     --bad:#D9694F;
   }
@@ -56,8 +56,13 @@
     letter-spacing:-0.01em;
     margin-bottom:8px;
   }
+  .page-title{
+    color:#0A0A0A;
+    font-weight:800;
+  }
   .sub{
-    color:var(--text-dim);
+    color:#0A0A0A;
+    font-weight:700;
     font-size:14px;
     line-height:1.5;
     margin-bottom:28px;
@@ -65,8 +70,8 @@
 
   .card{
     background:var(--card);
-    border:1px solid var(--line);
-    border-radius:14px;
+    border:2px solid var(--line);
+    border-radius:18px;
     padding:24px;
     position:relative;
     overflow:hidden;
@@ -87,9 +92,9 @@
     align-items:center;
     justify-content:center;
     gap:10px;
-    background:var(--text);
+    background:#FFFFFF;
+    border:1px solid var(--line);
     color:#1a1a1a;
-    border:none;
     border-radius:10px;
     padding:14px 18px;
     font-family:'Inter',sans-serif;
@@ -101,7 +106,8 @@
   .g-btn:active{ transform:scale(0.98); }
   .g-btn svg{ width:18px; height:18px; flex-shrink:0; }
   .hint{
-    color:var(--text-dim);
+    color:var(--text);
+    font-weight:700;
     font-size:12.5px;
     margin-top:14px;
     line-height:1.5;
@@ -199,10 +205,11 @@
     margin-top:20px;
   }
   footer a{
-    color:var(--text-dim);
+    color:#0A0A0A;
+    font-weight:800;
     font-size:12px;
     text-decoration:none;
-    border-bottom:1px dotted var(--line);
+    border-bottom:1px dotted #0A0A0A;
   }
 </style>
 </head>
@@ -211,7 +218,7 @@
 <div class="wrap">
   <div class="badge-strip"></div>
   <div class="eyebrow">Registro de personal</div>
-  <h1>Registros</h1>
+  <h1 class="page-title">Registros</h1>
   <p class="sub">Confirma tu cuenta y completa tus datos para quedar registrado.</p>
 
   <div class="card">
