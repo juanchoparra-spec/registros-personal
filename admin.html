@@ -8,14 +8,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#132A4C;
-    --card:#1B3A63;
-    --card-2:#234876;
+    --bg:#4FA8E8;
+    --card:#041E42;
+    --card-2:#0C2D52;
     --accent:#E8A33D;
     --accent-dim:#B87D2C;
-    --text:#F5F1E8;
+    --text:#D9E1E8;
     --text-dim:#9FB0AE;
-    --line:#2E5490;
+    --line:#154A7D;
     --good:#4FA88A;
     --bad:#D9694F;
   }
@@ -23,6 +23,7 @@
   body{
     background:var(--bg);
     color:var(--text);
+    font-weight:600;
     font-family:'Inter',sans-serif;
     min-height:100vh;
     -webkit-font-smoothing:antialiased;
@@ -398,6 +399,8 @@
         nombre: d.nombre || '',
         telefono: d.telefono || '',
         email: d.email || '',
+        cargo: d.cargo || '',
+        fechaIngreso: d.fechaIngreso || '',
         grupo: d.grupo || 'General',
         fecha: d.fecha ? d.fecha.toDate() : null
       };
@@ -447,15 +450,25 @@
   }
 
   function rowHtml(r){
+    const ingresoTxt = r.fechaIngreso ? formatMesAnio(r.fechaIngreso) : '';
+    const metaParts = [r.telefono, r.email];
+    if (r.cargo) metaParts.push(r.cargo);
+    if (ingresoTxt) metaParts.push('Desde ' + ingresoTxt);
     return `
       <div class="row">
         <div>
           <div class="name">${escapeHtml(r.nombre)}</div>
-          <div class="meta">${escapeHtml(r.telefono)} · ${escapeHtml(r.email)}</div>
+          <div class="meta">${metaParts.map(escapeHtml).join(' · ')}</div>
         </div>
         <div class="date">${r.fecha ? formatDate(r.fecha) : ''}</div>
       </div>
     `;
+  }
+
+  function formatMesAnio(yyyyMM){
+    const [y, m] = yyyyMM.split('-');
+    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    return `${meses[parseInt(m,10)-1]} ${y}`;
   }
 
   function formatDate(d){
@@ -474,6 +487,8 @@
       Nombre: r.nombre,
       Teléfono: r.telefono,
       Email: r.email,
+      Cargo: r.cargo,
+      'Fecha de ingreso': r.fechaIngreso ? formatMesAnio(r.fechaIngreso) : '',
       Ronda: r.grupo,
       Fecha: r.fecha ? formatDate(r.fecha) : ''
     }));
