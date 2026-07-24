@@ -387,8 +387,13 @@
 <script>
   const ua = navigator.userAgent || '';
   const isInApp = /WhatsApp|FBAN|FBAV|Instagram|Line\//i.test(ua);
+  const isAndroid = /Android/i.test(ua);
 
   if (isInApp) {
+    if (isAndroid) {
+      const target = window.location.href.replace(/^https?:\/\//, '');
+      window.location.href = 'intent://' + target + '#Intent;scheme=https;package=com.android.chrome;end;';
+    }
     document.getElementById('inapp-warning').style.display = 'block';
     document.getElementById('normal-flow').style.display = 'none';
     const copyBtn = document.getElementById('copyLinkBtn');
