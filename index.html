@@ -220,6 +220,74 @@
     text-decoration:none;
     border-bottom:1px dotted var(--accent);
   }
+
+  #inapp-warning{
+    display:none;
+    background:var(--card);
+    color:var(--text-dim);
+    border-radius:18px;
+    padding:28px 22px;
+    text-align:center;
+    box-shadow:0 12px 30px rgba(0,0,0,0.35);
+  }
+  #inapp-warning .icon{
+    width:60px; height:60px;
+    border-radius:50%;
+    background:var(--card-2);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 16px;
+    font-size:28px;
+  }
+  #inapp-warning h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:19px;
+    margin-bottom:10px;
+  }
+  #inapp-warning p{
+    font-size:14px;
+    line-height:1.6;
+    margin-bottom:18px;
+  }
+  #inapp-warning .step{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-align:left;
+    background:var(--card-2);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:10px;
+    font-size:13.5px;
+    font-weight:700;
+  }
+  #inapp-warning .step .n{
+    width:24px; height:24px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#1a1207;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px;
+    flex-shrink:0;
+  }
+  #inapp-warning .copy-btn{
+    width:100%;
+    background:var(--accent);
+    color:#1a1207;
+    border:none;
+    border-radius:10px;
+    padding:14px 18px;
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  #inapp-warning .copied{
+    color:var(--good);
+    font-size:13px;
+    font-weight:700;
+    margin-top:10px;
+    display:none;
+  }
 </style>
 </head>
 <body>
@@ -235,6 +303,18 @@
   <h1 class="page-title">Registros</h1>
   <p class="sub">Confirma tu cuenta y completa tus datos para quedar registrado.</p>
 
+  <div id="inapp-warning">
+    <div class="icon">⚠️</div>
+    <h2>Abre este link en tu navegador</h2>
+    <p>Para registrarte con Google, primero copia este link y ábrelo en Safari o Chrome (no dentro de WhatsApp).</p>
+    <div class="step"><span class="n">1</span> Toca "Copiar link" abajo</div>
+    <div class="step"><span class="n">2</span> Sal de WhatsApp y abre Safari o Chrome</div>
+    <div class="step"><span class="n">3</span> Pega el link en la barra de direcciones y entra</div>
+    <button class="copy-btn" id="copyLinkBtn">Copiar link</button>
+    <p class="copied" id="copiedMsg">¡Copiado! Ahora ábrelo en tu navegador.</p>
+  </div>
+
+  <div id="normal-flow">
   <div class="card">
 
     <div id="step-google">
@@ -297,6 +377,7 @@
   <footer>
     <a href="admin.html">Administrador</a>
   </footer>
+  </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -304,6 +385,25 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script>
+  const ua = navigator.userAgent || '';
+  const isInApp = /WhatsApp|FBAN|FBAV|Instagram|Line\//i.test(ua);
+
+  if (isInApp) {
+    document.getElementById('inapp-warning').style.display = 'block';
+    document.getElementById('normal-flow').style.display = 'none';
+    const copyBtn = document.getElementById('copyLinkBtn');
+    const copiedMsg = document.getElementById('copiedMsg');
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        copiedMsg.style.display = 'block';
+      } catch (e) {
+        copiedMsg.textContent = window.location.href;
+        copiedMsg.style.display = 'block';
+      }
+    });
+  }
+
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const db = firebase.firestore();
@@ -332,7 +432,6 @@
         rondaActual = doc.data().rondaActual;
       }
     } catch (e) {
-      // si no existe todavía, se queda "General"
     }
   }
 
