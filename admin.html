@@ -8,7 +8,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#2E7FD9;
+    --bg-1:#0A1A3D;
+    --bg-2:#061029;
+    --pale:#D6E6FA;
+    --pale-text:#042C53;
     --card:#FFFFFF;
     --card-2:#F2F5FA;
     --accent:#E8A33D;
@@ -21,7 +24,7 @@
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
-    background:var(--bg);
+    background:linear-gradient(135deg, var(--bg-1), var(--bg-2));
     color:var(--text);
     font-weight:600;
     font-family:'Inter',sans-serif;
@@ -83,40 +86,61 @@
   .err{ color:var(--bad); font-size:13px; margin-top:10px; display:none; }
   .back-link{
     display:block;
-    text-align:center;
-    color:#0A0A0A;
+    width:fit-content;
+    margin:18px auto 0;
+    background:#FFFFFF;
+    color:var(--pale-text);
     font-size:13px;
     font-weight:800;
     text-decoration:none;
-    border-bottom:1px dotted #0A0A0A;
-    margin-top:18px;
+    padding:9px 18px;
+    border-radius:20px;
+    border-bottom:2px dotted var(--accent);
   }
-  .back-link-bottom{
-    margin-top:24px;
-    padding-bottom:20px;
+  #panel .back-link-bottom{
+    margin:24px auto 20px;
   }
 
   #panel{ display:none; padding:24px 18px 60px; max-width:900px; margin:0 auto; }
   .top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:22px;
-    flex-wrap:wrap;
+    margin-bottom:8px;
   }
-  .count{
-    color:#0A0A0A;
+  .panel-title{
+    color:#FFFFFF;
+    margin-bottom:14px;
+  }
+  .filter-row{ margin-bottom:12px; }
+  .stat-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:12px;
+  }
+  .stat-card{
+    background:var(--pale);
+    border-radius:10px;
+    padding:8px 12px;
+    text-align:center;
+  }
+  .stat-label{
+    font-size:10px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
     font-weight:800;
-    font-size:13px;
+    color:var(--pale-text);
+  }
+  .stat-value{
+    font-size:20px;
+    font-weight:800;
+    color:var(--pale-text);
   }
   .ronda-bar{
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:12px;
-    background:var(--card-2);
-    border:1px solid var(--line);
+    background:var(--pale);
+    border:none;
     border-radius:12px;
     padding:14px 16px;
     margin-bottom:20px;
@@ -125,7 +149,7 @@
     font-size:11px;
     letter-spacing:.1em;
     text-transform:uppercase;
-    color:#0A0A0A;
+    color:var(--pale-text);
     font-weight:800;
     margin-bottom:3px;
   }
@@ -133,13 +157,13 @@
     font-family:'Space Grotesk',sans-serif;
     font-size:17px;
     font-weight:800;
-    color:var(--accent);
+    color:var(--pale-text);
   }
   .new-round-btn{
     background:#FFFFFF;
-    color:var(--text);
-    border:1px solid var(--line);
-    border-radius:10px;
+    color:var(--pale-text);
+    border:1px solid var(--pale-text);
+    border-radius:8px;
     padding:9px 14px;
     font-weight:800;
     font-size:13px;
@@ -147,25 +171,28 @@
     white-space:nowrap;
   }
   .filter-select{
-    background:var(--card-2);
-    color:var(--text);
-    border:1px solid var(--line);
+    width:100%;
+    background:var(--pale);
+    color:var(--pale-text);
+    border:none;
     border-radius:10px;
-    padding:10px 12px;
+    padding:12px 14px;
     font-size:13px;
+    font-weight:700;
     font-family:'Inter',sans-serif;
     outline:none;
   }
   .group-header{
-    color:var(--text-dim);
+    color:#FFFFFF;
     font-size:12px;
     letter-spacing:.08em;
     text-transform:uppercase;
-    font-weight:600;
+    font-weight:800;
     margin:18px 0 8px;
   }
   .group-header:first-child{ margin-top:0; }
   .export-btn{
+    width:100%;
     background:var(--accent);
     color:#1a1207;
     border:none;
@@ -176,15 +203,16 @@
     cursor:pointer;
   }
   .reset-btn{
-    background:#FFFFFF;
-    color:var(--bad);
-    border:1px solid var(--bad);
+    width:100%;
+    background:var(--pale);
+    color:#711F1F;
+    border:none;
     border-radius:10px;
     padding:11px 16px;
     font-weight:800;
     font-size:14px;
     cursor:pointer;
-    margin-left:8px;
+    margin-bottom:20px;
   }
   .modal-overlay{
     display:none;
@@ -278,7 +306,7 @@
   .row .date{ color:var(--text-dim); font-size:12px; white-space:nowrap; }
   .empty{
     text-align:center;
-    color:#0A0A0A;
+    color:#FFFFFF;
     font-weight:700;
     font-size:14px;
     padding:40px 20px;
@@ -308,15 +336,20 @@
   </div>
 
   <div class="top">
-    <div>
-      <div class="eyebrow">Registros</div>
-      <h1 style="margin-bottom:2px;">Lista de personal</h1>
-      <div class="count" id="count"></div>
+    <div class="eyebrow">Registros</div>
+    <h1 class="panel-title">Lista de personal</h1>
+    <div class="filter-row">
+      <select id="filterSelect" class="filter-select">
+        <option value="__todas__">Todas las rondas</option>
+      </select>
     </div>
-    <select id="filterSelect" class="filter-select">
-      <option value="__todas__">Todas las rondas</option>
-    </select>
-    <button class="export-btn" id="exportBtn">Exportar a Excel</button>
+    <div class="stat-row">
+      <button class="export-btn" id="exportBtn">Exportar a Excel</button>
+      <div class="stat-card">
+        <div class="stat-label">Total registros</div>
+        <div class="stat-value" id="count">0</div>
+      </div>
+    </div>
     <button class="reset-btn" id="resetBtn">Borrar todo</button>
   </div>
   <div class="list" id="list"></div>
@@ -445,7 +478,7 @@
 
   function render(){
     const data = filteredRegistros();
-    countEl.textContent = data.length === 1 ? '1 registro' : `${data.length} registros`;
+    countEl.textContent = data.length;
     if (data.length === 0) {
       listEl.innerHTML = '<div class="empty">Todavía no hay registros.</div>';
       return;
